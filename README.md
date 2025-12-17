@@ -11,6 +11,7 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![Redis](https://img.shields.io/badge/redis-6.0+-red.svg)](https://redis.io/)
   [![codecov](https://codecov.io/gh/yedidyakfir/rapyer/branch/main/graph/badge.svg)](https://codecov.io/gh/yedidyakfir/rapyer)
+  [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/AvalancheHQ/rapyer)
   [![PyPI version](https://badge.fury.io/py/rapyer.svg)](https://badge.fury.io/py/rapyer)
   [![Downloads](https://static.pepy.tech/badge/rapyer)](https://pepy.tech/project/rapyer)
   [![Documentation](https://img.shields.io/badge/docs-github.io-blue)](https://yedidyakfir.github.io/rapyer/)
