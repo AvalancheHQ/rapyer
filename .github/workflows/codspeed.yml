@@ -48,9 +48,6 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
 
-      - name: Update lock file
-        run: poetry lock --no-update
-
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
@@ -59,11 +56,7 @@ jobs:
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root --with tests
-
-      - name: Install project
-        run: poetry install --no-interaction --with tests
+        run: poetry install --no-interaction --with tests --sync
 
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v4
