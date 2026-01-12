@@ -61,7 +61,7 @@ async def test_dict_set_item_performance():
     model = CollectionModel()
     await model.save()
     
-await model.counters.aset("counter1", 100)
+    await model.counters.aset("counter1", 100)
     await model.counters.aset("counter2", 200)
     await model.counters.aset("counter3", 300)
     
