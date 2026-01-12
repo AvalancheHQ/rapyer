@@ -14,6 +14,7 @@
   [![PyPI version](https://badge.fury.io/py/rapyer.svg)](https://badge.fury.io/py/rapyer)
   [![Downloads](https://static.pepy.tech/badge/rapyer)](https://pepy.tech/project/rapyer)
   [![Documentation](https://img.shields.io/badge/docs-github.io-blue)](https://yedidyakfir.github.io/rapyer/)
+  [![CodSpeed](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/AvalancheHQ/rapyer?utm_source=badge)
 
   
   📚 **[Full Documentation](https://yedidyakfir.github.io/rapyer/)** | [Installation](https://yedidyakfir.github.io/rapyer/installation/) | [Examples](https://yedidyakfir.github.io/rapyer/examples/) | [API Reference](https://yedidyakfir.github.io/rapyer/api/)
