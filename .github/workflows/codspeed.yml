@@ -1,0 +1,78 @@
+name: CodSpeed
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  codspeed:
+    name: Run benchmarks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Start Redis
+        run: |
+          cd tests/integration
+          docker compose -f docker-compose.redis.yml up -d
+
+      - name: Wait for Redis to be ready
+        run: |
+          echo "Waiting for Redis to be ready..."
+          for i in {1..30}; do
+            if docker exec $(docker ps -q --filter "name=redis") redis-cli ping > /dev/null 2>&1; then
+              echo "Redis is ready!"
+              exit 0
+            fi
+            echo "Waiting for Redis... ($i/30)"
+            sleep 2
+          done
+          exit 1
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --with tests
+
+      - name: Install pytest-codspeed
+        run: poetry run pip install pytest-codspeed==4.2.0
+
+      - name: Run benchmarks
+        uses: CodSpeedHQ/action@v4
+        env:
+          REDIS_HOST: localhost
+          REDIS_PORT: 6370
+          REDIS_DB: 0
+        with:
+          mode: simulation
+          run: poetry run pytest tests/benchmarks/ --codspeed
+
+      - name: Stop Redis
+        if: always()
+        run: |
+          cd tests/integration
+          docker compose -f docker-compose.redis.yml down
